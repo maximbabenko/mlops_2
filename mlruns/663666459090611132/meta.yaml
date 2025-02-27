@@ -1,0 +1,6 @@
+artifact_location: file:///home/serg/MLOPS/mlops_hw_3_2_2/mlruns/663666459090611132
+creation_time: 1734435516714
+experiment_id: '663666459090611132'
+last_update_time: 1734435516714
+lifecycle_stage: active
+name: wine_quality_experiment

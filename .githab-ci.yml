@@ -1,0 +1,58 @@
+stages:
+  - preprocessing
+  - processing
+  - deploy_report
+  - build_docs
+
+variables:
+  PATH_TO_DATA: "/home/serg/MLOPS/MLOPS_HW_3_2_2"
+  QUARTO_VERSION: "1.7.5"
+  PUBLIC_PATH: "public"
+  
+
+# Добавляем глобальное определение кэша
+cache:
+  paths:
+    - .cache/pip
+    - venv/
+
+preprocessing:
+  stage: preprocessing
+  image: python:3.12
+  before_script:
+    
+    - python3 -m venv venv       # Создаем виртуальное окружение
+    - source ./venv/bin/activate  # Активируем виртуальное окружение
+    #- pip install --upgrade pip
+    #- pip install -r requirements.txt
+    #- sudo apt -y install coreutils
+    
+  script:
+    # Предобработка данных из папки data в  папку data
+    - python3 preproc.py data data
+  only:
+    - main
+
+processing:
+  stage: processing
+  image: python:3.12
+  before_script:
+    #- sudo apt install python3-pip
+    - pip install --upgrade pip --break-system-packages
+    - pip install -r requirements.txt --break-system-packages
+       
+  script:
+    # запуск mlflow
+    - python3 processing.py
+  only:
+    - main    
+    
+pages:
+  stage: deploy_report
+  script:
+    - echo "Deploying report to GitLab Pages..."
+  artifacts:
+    paths:
+      - public
+  only:
+    - main

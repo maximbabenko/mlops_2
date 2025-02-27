@@ -1,0 +1,15 @@
+artifact_uri: file:///home/serg/MLOPS/mlops_hw_3_2_2/mlruns/663666459090611132/593a631b513542c9ae12a8b8809f6d16/artifacts
+end_time: 1734950322173
+entry_point_name: ''
+experiment_id: '663666459090611132'
+lifecycle_stage: active
+run_id: 593a631b513542c9ae12a8b8809f6d16
+run_name: Decision Tree (max_depth=10)_20241223_133839
+run_uuid: 593a631b513542c9ae12a8b8809f6d16
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1734950319214
+status: 3
+tags: []
+user_id: serg

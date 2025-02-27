@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ experiment_name }} - Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        h3 {
+            margin-top: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+        }
+        .model-summary {
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .model-summary h3 {
+            margin-top: 0;
+        }
+        .model-summary p {
+            margin: 5px 0;
+        }
+
+         .mlflow-analysis {
+        margin: 2em 0;
+        padding: 1em;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        }
+
+        .plot-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1em;
+            justify-content: center;
+            margin: 1em 0;
+        }
+
+        .plot-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .model-card {
+            background-color: white;
+            padding: 1em;
+            margin: 1em 0;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+
+        .performance-table th,
+        .performance-table td {
+            padding: 0.5em;
+            border: 1px solid #dee2e6;
+            text-align: left;
+        }
+
+        .performance-table th {
+            background-color: #f1f3f5;
+        }
+
+        details summary {
+            cursor: pointer;
+            color: #007bff;
+        }
+
+        details ul {
+            margin-top: 0.5em;
+            padding-left: 1.5em;
+        }
+
+        .mlflow-analysis {
+            margin: 2em 0;
+            padding: 1em;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .plot-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1em;
+            justify-content: center;
+            margin: 1em 0;
+        }
+
+        .plot-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .model-card {
+            background-color: white;
+            padding: 1em;
+            margin: 1em 0;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+
+        .performance-table th,
+        .performance-table td {
+            padding: 0.5em;
+            border: 1px solid #dee2e6;
+            text-align: left;
+        }
+
+        .performance-table th {
+            background-color: #f1f3f5;
+        }
+
+        details summary {
+            cursor: pointer;
+            color: #007bff;
+        }
+
+        details ul {
+            margin-top: 0.5em;
+            padding-left: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Experiment: {{ experiment_name }}</h1>
+    <p>Generated on: {{ current_date }}</p>
+    <p>Experiment ID: {{ experiment_id }}</p>
+
+    <h2>Краткий обзор</h2>
+    <p>В этом эксперименте сравнивается производительность различных моделей машинного обучения на наборе данных о качестве вина. Среди тестируемых моделей:</p>
+    <ul>
+        <li><strong>Logistic Regression</strong>: Линейная модель, используемая для классификации. Мы протестировали два варианта: стандартный `C=1.0` и `C=0.5`.</li>
+        <li><strong>Decision Tree</strong>: Нелинейная модель с регулируемой глубиной. Мы протестировали две вариации: max depth `10` and `15`.</li>
+    </ul>
+    <p>Использовались следующие гиперпараметры:</p>
+    <ul>
+        <li>Logistic Regression: `max_iter=1000` и `max_iter=2000` с `C=1.0` and `C=0.5`.</li>
+        <li>Decision Tree: `max_depth=10` и `max_depth=15`.</li>
+    </ul>
+
+    <h2>Models Performance Metrics</h2>
+    <table>
+        <thead>
+            <tr>
+                {% for col in runs[0].keys() %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for run in runs %}
+                <tr>
+                    {% for value in run.values() %}
+                        <td>
+                            {% if value is number %}
+                                {{ "%.4f" | format(value) }}
+                            {% else %}
+                                {{ value }}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Сравнение производительности</h2>
+    <img src="{{ graph_path }}" alt="Performance Comparison">
+
+    <!-- MLflow Performance Analysis Section -->
+    <section class="mlflow-analysis">
+        <h2>Подробный анализ производительности моделей</h2>
+        
+        <!-- Графики производительности -->
+        <div class="performance-plots">
+            <h3>График производительности</h3>
+            <div class="plot-container">
+                <img src="{{ mlflow_plot.duration_plot }}" alt="Model Training Duration" class="plot-image">
+            </div>
+        </div>
+
+        <!-- Дополнительная информация о производительности -->
+        <div class="performance-details">
+            <h3>Детали производительности</h3>
+            <table class="performance-table">
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Время выполнения (сек)</th>
+                        <th>Статус</th>
+                        <th>Параметры</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for run_id, data in performance_data.items() %}
+                    <tr>
+                        <td>{{ data.model_name }}</td>
+                        <td>{{ "%.2f"|format(data.duration) }}</td>
+                        <td>{{ data.status }}</td>
+                        <td>
+                            <details>
+                                <summary>Показать параметры</summary>
+                                <ul>
+                                    {% for param, value in data.parameters.items() %}
+                                    <li><strong>{{ param }}:</strong> {{ value }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </details>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <h2>Подробные результаты для каждой модели</h2>
+
+    {% for run in full_runs %}
+        <div class="model-summary">
+            <h3>{{ run.Model }}</h3>
+
+            <h4>Classification Report</h4>
+            <pre>{{ model_reports[run.Model] }}</pre>
+
+            <img src="{{ run.confusion_matrix_path }}" alt="Confusion Matrix for {{ run.Model }}">
+        </div>
+    {% endfor %}
+
+    <h2>Выводы</h2>
+    <p>
+        <strong>Лучшая модель:</strong> Модель дерева решений с `max_depth=15` достигла наивысших значений accuracy ({{ best_accuracy }}), precision ({{ best_precision }}), recall ({{ best_recall }}) и f1_score ({{ best_f1_score }}), что делает ее самой надежной моделью в этом эксперименте.</p>
+    <p>
+        <strong>Логистическая регрессия: </strong> Эта модель показала относительно низкую производительность в сравнении. Изменение параметра регуляризации `C` не оказало существенного влияния на ее производительность, что говорит о том, что она может быть не самой лучшей моделью для данного набора данных.
+    </p>
+    <p>
+        <strong>Эффект глубины дерева решений:</strong> Увеличение max_depth дерева решений с 10 до 15 улучшило все показатели производительности, указывая на то, что при меньшей глубине модель была недостаточно приспособлена.
+    </p>
+    <p>
+        <strong>Время обучения моделей</strong>: Логистическая регрессия с C=1.0 требует значительно больше времени на обучение (4.8 секунд) по сравнению с другими моделями. Интересно отметить, что уменьшение параметра регуляризации C до 0.5 существенно сократило время обучения до 2.9 секунд. Деревья решений показали стабильное время обучения около 3 секунд независимо от глубины (max_depth=10 или max_depth=15), что делает их не только более эффективными по метрикам качества, но и достаточно быстрыми в обучении.
+    </p>
+
+</body>
+</html>
+

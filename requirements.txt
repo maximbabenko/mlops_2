@@ -1,0 +1,7 @@
+dvc
+dvc[all]
+numpy
+pandas
+scikit-learn
+mlflow
+seaborn

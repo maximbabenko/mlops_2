@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wine_quality_experiment - Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        h3 {
+            margin-top: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+        }
+        .model-summary {
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .model-summary h3 {
+            margin-top: 0;
+        }
+        .model-summary p {
+            margin: 5px 0;
+        }
+
+         .mlflow-analysis {
+        margin: 2em 0;
+        padding: 1em;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        }
+
+        .plot-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1em;
+            justify-content: center;
+            margin: 1em 0;
+        }
+
+        .plot-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .model-card {
+            background-color: white;
+            padding: 1em;
+            margin: 1em 0;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+
+        .performance-table th,
+        .performance-table td {
+            padding: 0.5em;
+            border: 1px solid #dee2e6;
+            text-align: left;
+        }
+
+        .performance-table th {
+            background-color: #f1f3f5;
+        }
+
+        details summary {
+            cursor: pointer;
+            color: #007bff;
+        }
+
+        details ul {
+            margin-top: 0.5em;
+            padding-left: 1.5em;
+        }
+
+        .mlflow-analysis {
+            margin: 2em 0;
+            padding: 1em;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .plot-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1em;
+            justify-content: center;
+            margin: 1em 0;
+        }
+
+        .plot-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .model-card {
+            background-color: white;
+            padding: 1em;
+            margin: 1em 0;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+
+        .performance-table th,
+        .performance-table td {
+            padding: 0.5em;
+            border: 1px solid #dee2e6;
+            text-align: left;
+        }
+
+        .performance-table th {
+            background-color: #f1f3f5;
+        }
+
+        details summary {
+            cursor: pointer;
+            color: #007bff;
+        }
+
+        details ul {
+            margin-top: 0.5em;
+            padding-left: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Experiment: wine_quality_experiment</h1>
+    <p>Generated on: 2024-12-23 13:47:49</p>
+    <p>Experiment ID: 20241223134749</p>
+
+    <h2>Краткий обзор</h2>
+    <p>В этом эксперименте сравнивается производительность различных моделей машинного обучения на наборе данных о качестве вина. Среди тестируемых моделей:</p>
+    <ul>
+        <li><strong>Logistic Regression</strong>: Линейная модель, используемая для классификации. Мы протестировали два варианта: стандартный `C=1.0` и `C=0.5`.</li>
+        <li><strong>Decision Tree</strong>: Нелинейная модель с регулируемой глубиной. Мы протестировали две вариации: max depth `10` and `15`.</li>
+    </ul>
+    <p>Использовались следующие гиперпараметры:</p>
+    <ul>
+        <li>Logistic Regression: `max_iter=1000` и `max_iter=2000` с `C=1.0` and `C=0.5`.</li>
+        <li>Decision Tree: `max_depth=10` и `max_depth=15`.</li>
+    </ul>
+
+    <h2>Models Performance Metrics</h2>
+    <table>
+        <thead>
+            <tr>
+                
+                    <th>Model</th>
+                
+                    <th>accuracy</th>
+                
+                    <th>precision</th>
+                
+                    <th>recall</th>
+                
+                    <th>f1_score</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            
+                <tr>
+                    
+                        <td>
+                            
+                                Logistic Regression (C=1.0)
+                            
+                        </td>
+                    
+                        <td>
+                            
+                                0.5646
+                            
+                        </td>
+                    
+                        <td>
+                            
+                                0.5253
+                            
+                        </td>
+                    
+                        <td>
+                            
+                                0.5646
+                            
+                        </td>
+                    
+                        <td>
+                            
+                                0.5401
+                            
+                        </td>
+                    
+                </tr>
+            
+                <tr>
+                    
+                        <td>
+                            
+                                Logistic Regression (C=0.5)
+                            
+                        </td>
+                    
+                        <td>
+                            
+                                0.5667
+                            
+                        </td>
+                    
+                        <td>
+                            
+                                0.5277
+                            
+                        </td>
+                    
+                        <td>
+                            
+                                0.5667
+                            
+                        </td>
+                    
+                        <td>
+                            
+                                0.5420
+                            
+                        </td>
+                    
+                </tr>
+            
+                <tr>
+                    
+                        <td>
+                            
+                                Decision Tree (max_depth=10)
+                            
+                        </td>
+                    
+                        <td>
+                            
+                                0.5562
+                            
+                        </td>
+                    
+                        <td>
+                            
+                                0.5408
+                            
+                        </td>
+                    
+                        <td>
+                            
+                                0.5562
+                            
+                        </td>
+                    
+                        <td>
+                            
+                                0.5484
+                            
+                        </td>
+                    
+                </tr>
+            
+                <tr>
+                    
+                        <td>
+                            
+                                Decision Tree (max_depth=15)
+                            
+                        </td>
+                    
+                        <td>
+                            
+                                0.5750
+                            
+                        </td>
+                    
+                        <td>
+                            
+                                0.5712
+                            
+                        </td>
+                    
+                        <td>
+                            
+                                0.5750
+                            
+                        </td>
+                    
+                        <td>
+                            
+                                0.5713
+                            
+                        </td>
+                    
+                </tr>
+            
+        </tbody>
+    </table>
+
+    <h2>Сравнение производительности</h2>
+    <img src="performance_comparison.png" alt="Performance Comparison">
+
+    <!-- MLflow Performance Analysis Section -->
+    <section class="mlflow-analysis">
+        <h2>Подробный анализ производительности моделей</h2>
+        
+        <!-- Графики производительности -->
+        <div class="performance-plots">
+            <h3>График производительности</h3>
+            <div class="plot-container">
+                <img src="model_durations.png" alt="Model Training Duration" class="plot-image">
+            </div>
+        </div>
+
+        <!-- Дополнительная информация о производительности -->
+        <div class="performance-details">
+            <h3>Детали производительности</h3>
+            <table class="performance-table">
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Время выполнения (сек)</th>
+                        <th>Статус</th>
+                        <th>Параметры</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td>Logistic Regression (C=1.0)</td>
+                        <td>3.88</td>
+                        <td>FINISHED</td>
+                        <td>
+                            <details>
+                                <summary>Показать параметры</summary>
+                                <ul>
+                                    
+                                    <li><strong>dual:</strong> False</li>
+                                    
+                                    <li><strong>penalty:</strong> l2</li>
+                                    
+                                    <li><strong>fit_intercept:</strong> True</li>
+                                    
+                                    <li><strong>intercept_scaling:</strong> 1</li>
+                                    
+                                    <li><strong>n_jobs:</strong> None</li>
+                                    
+                                    <li><strong>model:</strong> Logistic Regression (C=1.0)</li>
+                                    
+                                    <li><strong>max_iter:</strong> 1000</li>
+                                    
+                                    <li><strong>solver:</strong> lbfgs</li>
+                                    
+                                    <li><strong>tol:</strong> 0.0001</li>
+                                    
+                                    <li><strong>warm_start:</strong> False</li>
+                                    
+                                    <li><strong>class_weight:</strong> None</li>
+                                    
+                                    <li><strong>random_state:</strong> 42</li>
+                                    
+                                    <li><strong>C:</strong> 1.0</li>
+                                    
+                                    <li><strong>l1_ratio:</strong> None</li>
+                                    
+                                    <li><strong>verbose:</strong> 0</li>
+                                    
+                                    <li><strong>multi_class:</strong> deprecated</li>
+                                    
+                                </ul>
+                            </details>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Logistic Regression (C=0.5)</td>
+                        <td>3.16</td>
+                        <td>FINISHED</td>
+                        <td>
+                            <details>
+                                <summary>Показать параметры</summary>
+                                <ul>
+                                    
+                                    <li><strong>dual:</strong> False</li>
+                                    
+                                    <li><strong>penalty:</strong> l2</li>
+                                    
+                                    <li><strong>fit_intercept:</strong> True</li>
+                                    
+                                    <li><strong>intercept_scaling:</strong> 1</li>
+                                    
+                                    <li><strong>n_jobs:</strong> None</li>
+                                    
+                                    <li><strong>model:</strong> Logistic Regression (C=0.5)</li>
+                                    
+                                    <li><strong>max_iter:</strong> 2000</li>
+                                    
+                                    <li><strong>solver:</strong> lbfgs</li>
+                                    
+                                    <li><strong>tol:</strong> 0.0001</li>
+                                    
+                                    <li><strong>warm_start:</strong> False</li>
+                                    
+                                    <li><strong>class_weight:</strong> None</li>
+                                    
+                                    <li><strong>random_state:</strong> 42</li>
+                                    
+                                    <li><strong>C:</strong> 0.5</li>
+                                    
+                                    <li><strong>l1_ratio:</strong> None</li>
+                                    
+                                    <li><strong>verbose:</strong> 0</li>
+                                    
+                                    <li><strong>multi_class:</strong> deprecated</li>
+                                    
+                                </ul>
+                            </details>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Decision Tree (max_depth=10)</td>
+                        <td>3.40</td>
+                        <td>FINISHED</td>
+                        <td>
+                            <details>
+                                <summary>Показать параметры</summary>
+                                <ul>
+                                    
+                                    <li><strong>monotonic_cst:</strong> None</li>
+                                    
+                                    <li><strong>max_leaf_nodes:</strong> None</li>
+                                    
+                                    <li><strong>model:</strong> Decision Tree (max_depth=10)</li>
+                                    
+                                    <li><strong>ccp_alpha:</strong> 0.0</li>
+                                    
+                                    <li><strong>splitter:</strong> best</li>
+                                    
+                                    <li><strong>class_weight:</strong> None</li>
+                                    
+                                    <li><strong>min_samples_split:</strong> 2</li>
+                                    
+                                    <li><strong>random_state:</strong> 42</li>
+                                    
+                                    <li><strong>max_features:</strong> None</li>
+                                    
+                                    <li><strong>criterion:</strong> gini</li>
+                                    
+                                    <li><strong>min_weight_fraction_leaf:</strong> 0.0</li>
+                                    
+                                    <li><strong>max_depth:</strong> 10</li>
+                                    
+                                    <li><strong>min_impurity_decrease:</strong> 0.0</li>
+                                    
+                                    <li><strong>min_samples_leaf:</strong> 1</li>
+                                    
+                                </ul>
+                            </details>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Decision Tree (max_depth=15)</td>
+                        <td>3.33</td>
+                        <td>FINISHED</td>
+                        <td>
+                            <details>
+                                <summary>Показать параметры</summary>
+                                <ul>
+                                    
+                                    <li><strong>monotonic_cst:</strong> None</li>
+                                    
+                                    <li><strong>max_leaf_nodes:</strong> None</li>
+                                    
+                                    <li><strong>model:</strong> Decision Tree (max_depth=15)</li>
+                                    
+                                    <li><strong>ccp_alpha:</strong> 0.0</li>
+                                    
+                                    <li><strong>splitter:</strong> best</li>
+                                    
+                                    <li><strong>class_weight:</strong> None</li>
+                                    
+                                    <li><strong>min_samples_split:</strong> 2</li>
+                                    
+                                    <li><strong>random_state:</strong> 42</li>
+                                    
+                                    <li><strong>max_features:</strong> None</li>
+                                    
+                                    <li><strong>criterion:</strong> gini</li>
+                                    
+                                    <li><strong>min_weight_fraction_leaf:</strong> 0.0</li>
+                                    
+                                    <li><strong>max_depth:</strong> 15</li>
+                                    
+                                    <li><strong>min_impurity_decrease:</strong> 0.0</li>
+                                    
+                                    <li><strong>min_samples_leaf:</strong> 1</li>
+                                    
+                                </ul>
+                            </details>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <h2>Подробные результаты для каждой модели</h2>
+
+    
+        <div class="model-summary">
+            <h3>Logistic Regression (C=1.0)</h3>
+
+            <h4>Classification Report</h4>
+            <pre>              precision    recall  f1-score   support
+
+         3.0       0.00      0.00      0.00         1
+         4.0       0.00      0.00      0.00        17
+         5.0       0.62      0.75      0.68       195
+         6.0       0.53      0.55      0.54       200
+         7.0       0.42      0.26      0.32        61
+         8.0       0.00      0.00      0.00         6
+
+    accuracy                           0.56       480
+   macro avg       0.26      0.26      0.26       480
+weighted avg       0.53      0.56      0.54       480
+</pre>
+
+            <img src="confusion_matrix_logistic_regression_(c=1.0).png" alt="Confusion Matrix for Logistic Regression (C=1.0)">
+        </div>
+    
+        <div class="model-summary">
+            <h3>Logistic Regression (C=0.5)</h3>
+
+            <h4>Classification Report</h4>
+            <pre>              precision    recall  f1-score   support
+
+         3.0       0.00      0.00      0.00         1
+         4.0       0.00      0.00      0.00        17
+         5.0       0.62      0.75      0.68       195
+         6.0       0.53      0.55      0.54       200
+         7.0       0.43      0.26      0.33        61
+         8.0       0.00      0.00      0.00         6
+
+    accuracy                           0.57       480
+   macro avg       0.26      0.26      0.26       480
+weighted avg       0.53      0.57      0.54       480
+</pre>
+
+            <img src="confusion_matrix_logistic_regression_(c=0.5).png" alt="Confusion Matrix for Logistic Regression (C=0.5)">
+        </div>
+    
+        <div class="model-summary">
+            <h3>Decision Tree (max_depth=10)</h3>
+
+            <h4>Classification Report</h4>
+            <pre>              precision    recall  f1-score   support
+
+         3.0       0.00      0.00      0.00         1
+         4.0       0.00      0.00      0.00        17
+         5.0       0.64      0.67      0.65       195
+         6.0       0.53      0.55      0.54       200
+         7.0       0.46      0.44      0.45        61
+         8.0       0.00      0.00      0.00         6
+
+    accuracy                           0.56       480
+   macro avg       0.27      0.28      0.27       480
+weighted avg       0.54      0.56      0.55       480
+</pre>
+
+            <img src="confusion_matrix_decision_tree_(max_depth=10).png" alt="Confusion Matrix for Decision Tree (max_depth=10)">
+        </div>
+    
+        <div class="model-summary">
+            <h3>Decision Tree (max_depth=15)</h3>
+
+            <h4>Classification Report</h4>
+            <pre>              precision    recall  f1-score   support
+
+         3.0       0.00      0.00      0.00         1
+         4.0       0.10      0.06      0.07        17
+         5.0       0.67      0.64      0.66       195
+         6.0       0.55      0.59      0.57       200
+         7.0       0.45      0.49      0.47        61
+         8.0       0.50      0.17      0.25         6
+
+    accuracy                           0.57       480
+   macro avg       0.38      0.33      0.34       480
+weighted avg       0.57      0.57      0.57       480
+</pre>
+
+            <img src="confusion_matrix_decision_tree_(max_depth=15).png" alt="Confusion Matrix for Decision Tree (max_depth=15)">
+        </div>
+    
+
+    <h2>Выводы</h2>
+    <p>
+        <strong>Лучшая модель:</strong> Модель дерева решений с `max_depth=15` достигла наивысших значений accuracy (0.575), precision (0.5712), recall (0.575) и f1_score (0.5713), что делает ее самой надежной моделью в этом эксперименте.</p>
+    <p>
+        <strong>Логистическая регрессия: </strong> Эта модель показала относительно низкую производительность в сравнении. Изменение параметра регуляризации `C` не оказало существенного влияния на ее производительность, что говорит о том, что она может быть не самой лучшей моделью для данного набора данных.
+    </p>
+    <p>
+        <strong>Эффект глубины дерева решений:</strong> Увеличение max_depth дерева решений с 10 до 15 улучшило все показатели производительности, указывая на то, что при меньшей глубине модель была недостаточно приспособлена.
+    </p>
+    <p>
+        <strong>Время обучения моделей</strong>: Логистическая регрессия с C=1.0 требует значительно больше времени на обучение (4.8 секунд) по сравнению с другими моделями. Интересно отметить, что уменьшение параметра регуляризации C до 0.5 существенно сократило время обучения до 2.9 секунд. Деревья решений показали стабильное время обучения около 3 секунд независимо от глубины (max_depth=10 или max_depth=15), что делает их не только более эффективными по метрикам качества, но и достаточно быстрыми в обучении.
+    </p>
+
+</body>
+</html>

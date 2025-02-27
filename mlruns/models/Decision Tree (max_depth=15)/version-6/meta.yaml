@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1734950692623
+current_stage: None
+description: null
+last_updated_timestamp: 1734950692623
+name: Decision Tree (max_depth=15)
+run_id: 99b8621cbceb45a1b628484536bb87de
+run_link: null
+source: file:///home/serg/MLOPS/mlops_hw_3_2_2/mlruns/663666459090611132/99b8621cbceb45a1b628484536bb87de/artifacts/model
+status: READY
+status_message: null
+storage_location: file:///home/serg/MLOPS/mlops_hw_3_2_2/mlruns/663666459090611132/99b8621cbceb45a1b628484536bb87de/artifacts/model
+user_id: null
+version: 6

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/serg/MLOPS/mlops_hw_3_2_2/mlruns/663666459090611132/e126fe3b84234f5f9e6fb75b5b2a9e85/artifacts
+end_time: 1734436452638
+entry_point_name: ''
+experiment_id: '663666459090611132'
+lifecycle_stage: active
+run_id: e126fe3b84234f5f9e6fb75b5b2a9e85
+run_name: Logistic Regression (C=1.0)_20241217_145409
+run_uuid: e126fe3b84234f5f9e6fb75b5b2a9e85
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1734436449252
+status: 3
+tags: []
+user_id: serg
